@@ -74,6 +74,9 @@ VALID_MAP: dict[str, set[str]] = {
         "widthCol3", "widthCol4", "wordsPerPage", "countFrom", "clearDouble",
         "novelRoot",
     },
+    "GuiAiAssistant": {
+        "winWidth", "winHeight",
+    },
     "GuiOutlineDetails": {
         "detailsWidth", "tagsWidth",
     },

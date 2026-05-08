@@ -96,7 +96,10 @@ class Config:
         "singleStarBold", "spellLanguage", "stopWhenIdle", "tabWidth", "textFont", "textMargin",
         "textWidth", "themeMode", "useCharCount", "userIdleTime", "verPyQtString", "verPyQtValue",
         "verPyString", "verQtString", "verQtValue", "viewComments", "viewNotes", "viewPanePos",
-        "viewSynopsis", "vimMode", "welcomeWinSize",
+        "viewSynopsis", "vimMode", "welcomeWinSize", "aiApiKey", "aiContextCompressor",
+        "aiContextLimit", "aiCustomInstructions", "aiEnabled", "aiGuardrailsCustom",
+        "aiGuardrailsEnabled", "aiMemoryEnabled", "aiModel", "aiRagEnabled", "aiRagMaxDocs",
+        "aiReasoningEnabled", "aiSubAgentsEnabled",
     )
 
     LANG_NW   = 1
@@ -178,6 +181,21 @@ class Config:
         self.useCharCount = False          # Use character count as primary count
         self.countUnit    = "words"        # Primary count unit
         self.vimMode      = False          # Enable Vim mode
+
+        # AI Settings
+        self.aiEnabled            = False
+        self.aiApiKey             = ""
+        self.aiModel              = "openrouter/auto"
+        self.aiCustomInstructions = ""
+        self.aiGuardrailsCustom   = ""
+        self.aiGuardrailsEnabled  = True
+        self.aiContextCompressor  = True
+        self.aiContextLimit       = 12000
+        self.aiMemoryEnabled      = True
+        self.aiReasoningEnabled   = True
+        self.aiRagEnabled         = True
+        self.aiRagMaxDocs         = 6
+        self.aiSubAgentsEnabled   = False
 
         # Icons
         self.iconTheme   = DEF_ICONS    # Icons theme
@@ -757,6 +775,22 @@ class Config:
         self.searchProjWord  = conf.rdBool(sec, "searchprojword", self.searchProjWord)
         self.searchProjRegEx = conf.rdBool(sec, "searchprojregex", self.searchProjRegEx)
 
+        # AI
+        sec = "AI"
+        self.aiEnabled            = conf.rdBool(sec, "enabled", self.aiEnabled)
+        self.aiApiKey             = conf.rdStr(sec, "openrouterkey", self.aiApiKey)
+        self.aiModel              = conf.rdStr(sec, "openroutermodel", self.aiModel)
+        self.aiCustomInstructions = conf.rdStr(sec, "custominstructions", self.aiCustomInstructions)
+        self.aiGuardrailsCustom   = conf.rdStr(sec, "customguardrails", self.aiGuardrailsCustom)
+        self.aiGuardrailsEnabled  = conf.rdBool(sec, "guardrails", self.aiGuardrailsEnabled)
+        self.aiContextCompressor  = conf.rdBool(sec, "contextcompressor", self.aiContextCompressor)
+        self.aiContextLimit       = conf.rdInt(sec, "contextlimit", self.aiContextLimit)
+        self.aiMemoryEnabled      = conf.rdBool(sec, "memory", self.aiMemoryEnabled)
+        self.aiReasoningEnabled   = conf.rdBool(sec, "reasoning", self.aiReasoningEnabled)
+        self.aiRagEnabled         = conf.rdBool(sec, "rag", self.aiRagEnabled)
+        self.aiRagMaxDocs         = conf.rdInt(sec, "ragmaxdocs", self.aiRagMaxDocs)
+        self.aiSubAgentsEnabled   = conf.rdBool(sec, "subagents", self.aiSubAgentsEnabled)
+
         # Check Values
         # ============
 
@@ -890,6 +924,22 @@ class Config:
             "searchprojcase":  str(self.searchProjCase),
             "searchprojword":  str(self.searchProjWord),
             "searchprojregex": str(self.searchProjRegEx),
+        }
+
+        conf["AI"] = {
+            "enabled":            str(self.aiEnabled),
+            "openrouterkey":      str(self.aiApiKey),
+            "openroutermodel":    str(self.aiModel),
+            "custominstructions": str(self.aiCustomInstructions),
+            "customguardrails":   str(self.aiGuardrailsCustom),
+            "guardrails":         str(self.aiGuardrailsEnabled),
+            "contextcompressor":  str(self.aiContextCompressor),
+            "contextlimit":       str(self.aiContextLimit),
+            "memory":             str(self.aiMemoryEnabled),
+            "reasoning":          str(self.aiReasoningEnabled),
+            "rag":                str(self.aiRagEnabled),
+            "ragmaxdocs":         str(self.aiRagMaxDocs),
+            "subagents":          str(self.aiSubAgentsEnabled),
         }
 
         # Write config file

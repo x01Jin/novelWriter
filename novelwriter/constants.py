@@ -166,6 +166,7 @@ class nwFiles:
     OPTS_FILE   = "options.json"
     DICT_FILE   = "userdict.json"
     SESS_FILE   = "sessions.jsonl"
+    AI_MEMORY_FILE = "aiMemory.json"
 
 
 class nwKeyWords:
