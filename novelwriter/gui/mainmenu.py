@@ -1004,6 +1004,11 @@ class GuiMainMenu(QMenuBar):
         self.aWritingStats.setShortcut("F6")
         self.aWritingStats.triggered.connect(self.mainGui.showWritingStatsDialog)
 
+        # Tools > AI Assistant
+        self.aAiAssistant = qtAddAction(self.toolsMenu, self.tr("AI Assistant"))
+        self.aAiAssistant.setShortcut("Ctrl+Shift+A")
+        self.aAiAssistant.triggered.connect(self.mainGui.showAiAssistantDialog)
+
         # Tools > Preferences
         self.aPreferences = qtAddAction(self.toolsMenu, self.tr("Preferences"))
         self.aPreferences.setShortcut("Ctrl+,")

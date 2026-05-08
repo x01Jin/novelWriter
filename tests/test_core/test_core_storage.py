@@ -283,6 +283,8 @@ def testCoreStorage_ZipIt(monkeypatch, mockGUI, fncPath, tstPaths, mockRnd):
     # Make a project
     mockRnd.reset()
     buildTestProject(project, fncPath)
+    aiMemory = fncPath / "meta" / nwFiles.AI_MEMORY_FILE
+    aiMemory.write_text("{}", encoding="utf-8")
 
     # Fail to create archive
     with monkeypatch.context() as mp:
@@ -298,6 +300,7 @@ def testCoreStorage_ZipIt(monkeypatch, mockGUI, fncPath, tstPaths, mockRnd):
         assert nwFiles.PROJ_FILE in names
         assert f"meta/{nwFiles.OPTS_FILE}" in names
         assert f"meta/{nwFiles.INDEX_FILE}" in names
+        assert f"meta/{nwFiles.AI_MEMORY_FILE}" in names
         assert f"content/{C.hTitlePage}.nwd" in names
         assert f"content/{C.hChapterDoc}.nwd" in names
         assert f"content/{C.hSceneDoc}.nwd" in names

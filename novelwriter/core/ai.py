@@ -176,8 +176,7 @@ def buildSnippet(text: str, keywords: list[str], maxChars: int) -> str:
     pad = max(maxChars // 3, 120)
     start = max(0, matchIndex - pad)
     end = min(len(text), start + maxChars)
-    snippet = text[start:end].strip()
-    return snippet
+    return text[start:end].strip()
 
 
 class AiMemory:
@@ -370,9 +369,7 @@ def buildSystemPrompt(
     appendIfSet(parts, customInstructions.strip())
     appendIfSet(parts, guardrails.strip())
     if reasoning:
-        parts.append(
-            "Provide a short reasoning summary after the response, without revealing chain-of-thought."
-        )
+        parts.append("Provide a short reasoning summary after the response.")
     return "\n\n".join(parts)
 
 

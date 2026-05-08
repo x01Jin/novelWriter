@@ -59,6 +59,7 @@ from novelwriter.gui.projtree import GuiProjectView
 from novelwriter.gui.search import GuiProjectSearch
 from novelwriter.gui.sidebar import GuiSideBar
 from novelwriter.gui.statusbar import GuiMainStatus
+from novelwriter.tools.aiassistant import GuiAiAssistant
 from novelwriter.tools.dictionaries import GuiDictionaries
 from novelwriter.tools.manuscript import GuiManuscript
 from novelwriter.tools.noveldetails import GuiNovelDetails
@@ -793,6 +794,15 @@ class GuiMain(QMainWindow):
                 dialog = GuiWritingStats(self)
             dialog.activateDialog()
             dialog.populateGUI()
+
+    @pyqtSlot()
+    def showAiAssistantDialog(self) -> None:
+        """Open the AI assistant dialog."""
+        if SHARED.hasProject:
+            if not (dialog := SHARED.findTopLevelWidget(GuiAiAssistant)):
+                dialog = GuiAiAssistant(self)
+            dialog.activateDialog()
+            dialog.loadContent()
 
     @pyqtSlot()
     def showAboutNWDialog(self) -> None:

@@ -326,6 +326,7 @@ class NWStorage:
                 (baseMeta / nwFiles.OPTS_FILE,   f"meta/{nwFiles.OPTS_FILE}"),
                 (baseMeta / nwFiles.DICT_FILE,   f"meta/{nwFiles.DICT_FILE}"),
                 (baseMeta / nwFiles.SESS_FILE,   f"meta/{nwFiles.SESS_FILE}"),
+                (baseMeta / nwFiles.AI_MEMORY_FILE, f"meta/{nwFiles.AI_MEMORY_FILE}"),
             ]
             for contItem in baseCont.iterdir():
                 name = contItem.name
