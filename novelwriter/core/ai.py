@@ -45,6 +45,7 @@ logger = logging.getLogger(__name__)
 
 OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_OPENROUTER_MODEL = "openrouter/auto"
+DEFAULT_CONTEXT_MIN = 1000
 DEFAULT_CONTEXT_LIMIT = 12000
 DEFAULT_RAG_MAX_DOCS = 6
 DEFAULT_RAG_SNIPPET = 720

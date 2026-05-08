@@ -36,10 +36,10 @@ from PyQt6.QtWidgets import (
 
 from novelwriter import CONFIG, SHARED
 from novelwriter.core.ai import (
-    BUILTIN_GUARDRAILS, DEFAULT_CONTEXT_LIMIT, DEFAULT_RAG_MAX_DOCS,
-    DEFAULT_RAG_SNIPPET, SUB_AGENTS, AiContextBuilder, AiMemory,
-    OpenRouterClient, buildGuardrails, buildSystemPrompt, buildUserPrompt,
-    compressContext, extractKeywords
+    BUILTIN_GUARDRAILS, DEFAULT_CONTEXT_LIMIT, DEFAULT_CONTEXT_MIN,
+    DEFAULT_RAG_MAX_DOCS, DEFAULT_RAG_SNIPPET, SUB_AGENTS, AiContextBuilder,
+    AiMemory, OpenRouterClient, buildGuardrails, buildSystemPrompt,
+    buildUserPrompt, compressContext, extractKeywords
 )
 from novelwriter.enum import nwStandardButton
 from novelwriter.extensions.configlayout import NColorLabel
@@ -264,11 +264,11 @@ class GuiAiAssistant(NToolDialog):
         self.edtModel.setText(CONFIG.aiModel)
         self.swtGuardrails.setChecked(CONFIG.aiGuardrailsEnabled)
         self.swtContextCompressor.setChecked(CONFIG.aiContextCompressor)
-        self.spnContextLimit.setValue(max(CONFIG.aiContextLimit, DEFAULT_CONTEXT_LIMIT))
+        self.spnContextLimit.setValue(CONFIG.aiContextLimit or DEFAULT_CONTEXT_LIMIT)
         self.swtMemory.setChecked(CONFIG.aiMemoryEnabled)
         self.swtReasoning.setChecked(CONFIG.aiReasoningEnabled)
         self.swtRag.setChecked(CONFIG.aiRagEnabled)
-        self.spnRagDocs.setValue(max(CONFIG.aiRagMaxDocs, DEFAULT_RAG_MAX_DOCS))
+        self.spnRagDocs.setValue(CONFIG.aiRagMaxDocs or DEFAULT_RAG_MAX_DOCS)
         self.swtSubAgents.setChecked(CONFIG.aiSubAgentsEnabled)
         self.txtInstructions.setPlainText(CONFIG.aiCustomInstructions)
         self.txtGuardrails.setPlainText(CONFIG.aiGuardrailsCustom)
@@ -403,7 +403,8 @@ class GuiAiAssistant(NToolDialog):
         fullContext = "\n\n".join(contextParts)
         if CONFIG.aiContextCompressor and fullContext:
             keys = extractKeywords(prompt)
-            fullContext = compressContext(fullContext, keys, max(CONFIG.aiContextLimit, 1000))
+            limit = max(CONFIG.aiContextLimit or DEFAULT_CONTEXT_LIMIT, DEFAULT_CONTEXT_MIN)
+            fullContext = compressContext(fullContext, keys, limit)
 
         userPrompt = buildUserPrompt(prompt, [fullContext] if fullContext else [])
 
